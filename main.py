@@ -43,7 +43,7 @@ def main():
     #
     
     def calc_dist(p: tuple = (0, 0)):
-        relativepos = (abs(p[0]-circle_pos[0]),abs(p[1]-circle_pos[1]))
+        relativepos = (abs(p[0] - circle_pos[0]), abs(p[1] - circle_pos[1]))
         return Decimal(Decimal(relativepos[0]) * Decimal(relativepos[0]) + Decimal(relativepos[1]) * Decimal(relativepos[1])).sqrt()
 
     while IsRunning:
@@ -56,18 +56,22 @@ def main():
             if event.type == pygame.QUIT:
                 IsRunning = False;
 
-        for n in range(0, int(delay * PPS)):
+        for _ in range(0, int(delay * PPS)):
+            # rand pointe
             point = (random.randint(0, screen_width), random.randint(0, screen_height))
-
             square_points +=1
+
+            # if in circle
             if(calc_dist(point) < circle_radius):
                 pygame.draw.rect(screen, COLOR1, (point[0], point[1], 1,1))
                 circle_points += 1
             else:
                 pygame.draw.rect(screen, COLOR2, (point[0], point[1], 1,1))
 
+        # update screen
         pygame.display.update()
 
+    # calculate pi
     print(f'π = {Decimal((circle_points/square_points)*Decimal(4))}')
 if __name__ == "__main__":
     main()
